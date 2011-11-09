@@ -28,7 +28,10 @@ class Theme {
 	public function copy( $dest, $path=false ) {
 		if (!$path) $path = dirname(__FILE__).'/theme';
 
-		if( is_dir($path) ) {
+		if ( file_exists($dest) ) {
+			echo ">>> ERROR <<< $dest already exists!\n";
+		}
+		elseif( is_dir($path) ) {
 			@mkdir( $dest );
 			$objects = scandir($path);
 			if( sizeof($objects) > 0 )
@@ -44,21 +47,24 @@ class Theme {
 			return true;
 		}
 		elseif( is_file($path) ) {
-			if ( preg_match('/\.(php|css)$/i', $file) ) {
+			if ( preg_match('/\.(php|css)$/i', $path) ) {
 				$rfp = fopen($path, 'r');
-				$contents = fread($rfp, filesize($filename));
+				$contents = fread($rfp, filesize($path));
 				fclose($rfp);
 
 				# replace the placeholders
 				$contents = str_replace($this->search, $this->replace, $contents);
 
-				if ( is_writable($dest) && $wfp = fopen($dest, 'a') && fwrite($wfp, $contents) !== FALSE ) {
+				if ( ! $wfp = fopen($dest, 'a') ) {
+					echo ">>> ERROR <<< could not open $dest for writing\n";
+				}
+				elseif ( fwrite($wfp, $contents) !== FALSE ) {
 					echo "Created $dest\n";
 				}
 				else {
 					echo ">>> ERROR <<< Could not write contents of `$path` to `$dest`\n";
 				}
-				@fclose($handle);
+				@fclose($wfp);
 			}
 			else {
 				if (copy( $path, $dest ))

@@ -18,6 +18,7 @@ if ( strtolower($argv[1]) == 'theme' ) {
 	[3] => the domain, e.g. mydomain.com or blog.mydomain.com
 	[4] => the destination directory
 */
+	require_once dirname(__FILE__).'/theme.php';
 	if ( count($argv) < 5 ) die("\nInvalid theme parameters. Request should be of the format:\ngenerate.php theme my-theme-name domain.com /path/to/destination/\n");
 	$generator = new Theme($argv[2], $argv[3]);
 	$dest = $argv[4];
