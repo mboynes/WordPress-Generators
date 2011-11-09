@@ -18,12 +18,18 @@ if ( strtolower($argv[1]) == 'theme' ) {
 	[3] => the domain, e.g. mydomain.com or blog.mydomain.com
 	[4] => the destination directory
 */
+	if ( count($argv) < 5 ) die("\nInvalid theme parameters. Request should be of the format:\ngenerate.php theme my-theme-name domain.com /path/to/destination/\n");
 	$generator = new Theme($argv[2], $argv[3]);
 	$dest = $argv[4];
 }
 
 # Run the copy script for the generator
-echo "\n\nCreating a new {$argv[1]} in $dest\n----------------------------------------------\n";
-$generator->copy($dest);
+if ($generator) {
+	echo "\n\nCreating a new {$argv[1]} in $dest\n----------------------------------------------\n";
+	$generator->copy($dest);
+}
+else {
+	echo "\n\n>>> ERROR <<< Failed to instantiate generator. Do you know what you're doing?\n";
+}
 
 ?>
