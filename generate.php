@@ -30,7 +30,8 @@ if ($generator) {
 	$generator->copy($dest);
 }
 else {
-	echo "\n\n>>> ERROR <<< Failed to instantiate generator. Do you know what you're doing?\n";
+	echo "\n\n>>> ERROR <<< Failed to instantiate generator. You probably effed up the syntax, you silly programmer.
+	You're asking me to generate a new `{$argv[1]}`, but I don't know how to make those.\n";
 }
 
 ?>
