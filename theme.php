@@ -47,7 +47,7 @@ class Theme {
 			return true;
 		}
 		elseif( is_file($path) ) {
-			if ( preg_match('/\.(php|css)$/i', $path) ) {
+			if ( preg_match('/\.(php|s?css)$/i', $path) ) {
 				$rfp = fopen($path, 'r');
 				$contents = fread($rfp, filesize($path));
 				fclose($rfp);
